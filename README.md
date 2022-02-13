@@ -1,5 +1,14 @@
 # Bookstat
 
+<table>
+  <tr>
+    <td><img src="https://github.com/KiberneticWorm/Bookstat/blob/master/screens/screen1.png" /></td>
+    <td><img src="https://github.com/KiberneticWorm/Bookstat/blob/master/screens/screen2.png" /></td>
+    <td><img src="https://github.com/KiberneticWorm/Bookstat/blob/master/screens/screen3.png" /></td>
+    <td><img src="https://github.com/KiberneticWorm/Bookstat/blob/master/screens/screen4.png" /></td>
+  </tr>
+</table>
+
 In this app I don't use any **xml layout.**
 
 I created special **Kotlin extensions and classes** to make it easier to create views in code.
@@ -77,15 +86,4 @@ It looks like an [Anko library](https://github.com/Kotlin/anko)
 #### More examples:
 
 [see my application code](https://github.com/KiberneticWorm/Bookstat/tree/master/app)
-  
-# Screens
-
-<table>
-  <tr>
-    <td><img src="https://github.com/KiberneticWorm/Bookstat/blob/master/screens/screen1.png" /></td>
-    <td><img src="https://github.com/KiberneticWorm/Bookstat/blob/master/screens/screen2.png" /></td>
-    <td><img src="https://github.com/KiberneticWorm/Bookstat/blob/master/screens/screen3.png" /></td>
-    <td><img src="https://github.com/KiberneticWorm/Bookstat/blob/master/screens/screen4.png" /></td>
-  </tr>
-</table>
 
