@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <item name="book_name_edit" type="id"></item>
+    <item name="fragment_container" type="id"></item>
+    <item name="color_view" type="id"></item>
+</resources>
