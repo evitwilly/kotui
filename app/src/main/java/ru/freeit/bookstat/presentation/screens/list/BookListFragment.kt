@@ -99,20 +99,20 @@ class BookListFragment : BaseFragment() {
                 })
             }
 
-            val floatingButton = floatingButton {
-                img(R.drawable.ic_add)
-                imgColor(R.color.white)
-                tint(R.color.purple_200)
-                size(dp(56))
-                click { navigator.replace(AddFragment()) }
-                layoutParams(frameLayoutParams()
-                    .wrapWidth()
-                    .wrapHeight()
-                    .marginBottom(dp(16))
-                    .marginEnd(dp(16))
-                    .gravity(Gravity.END or Gravity.BOTTOM)
-                    .build())
-            }
+    val floatingButton = floatingButton {
+        img(R.drawable.ic_add)
+        imgColor(R.color.white)
+        tint(R.color.purple_200)
+        size(dp(56))
+        click { navigator.replace(AddFragment()) }
+        layoutParams(frameLayoutParams()
+            .wrapWidth()
+            .wrapHeight()
+            .marginBottom(dp(16))
+            .marginEnd(dp(16))
+            .gravity(Gravity.END or Gravity.BOTTOM)
+            .build())
+    }
 
             addView(list, floatingButton)
         }
