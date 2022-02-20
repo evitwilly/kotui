@@ -1,38 +1,40 @@
-# Bookstat
+# kotui
 
-<table>
-  <tr>
-    <td><img src="https://github.com/KiberneticWorm/Bookstat/blob/master/screens/screen1.png" /></td>
-    <td><img src="https://github.com/KiberneticWorm/Bookstat/blob/master/screens/screen2.png" /></td>
-    <td><img src="https://github.com/KiberneticWorm/Bookstat/blob/master/screens/screen3.png" /></td>
-    <td><img src="https://github.com/KiberneticWorm/Bookstat/blob/master/screens/screen4.png" /></td>
-  </tr>
-</table>
-
-In this app I don't use any **xml layout.**
-
-I created special **Kotlin extensions and classes** to make it easier to create views in code.
-
-You can use my mini library.
-
-**1.** Add it in your root build.gradle at the end of repositories:
-
-      allprojects {
-            repositories {
-                  ...
-                  maven { url 'https://jitpack.io' }
-            }
-      }
-
-**2.** Add the dependency:
-
-      dependencies {
-            implementation 'com.github.KiberneticWorm:Bookstat:ece888ced1'
-      }
+kotui - a set of Kotlin extensions to create UI on Android without using xml
 
 It looks like an [Anko library](https://github.com/Kotlin/anko)
 
-**Example №1:**
+#### Simple screen:
+
+    setContentView(frameLayout {
+    
+      val text1 = text {
+        fontSize(18f)
+        text("Hello, World!")
+        colorRes(R.color.black)
+        layoutParams(frameLayoutParams()
+            .wrapWidth().wrapHeight()
+            .gravity(Gravity.TOP or Gravity.CENTER_HORIZONTAL)
+            .marginTop(dp(16))
+            .build())
+      }
+      
+      val button1 = button {
+        fontSize(18f)
+        text("Click")
+        colorRes(R.color.black)
+        click { toast("Hello, World!") }
+        layoutParams(frameLayoutParams()
+            .wrapWidth().wrapHeight()
+            .gravity(Gravity.BOTTOM or Gravity.CENTER_HORIZONTAL)
+            .marginBottom(dp(16))
+            .build())
+      }
+      
+      addView(text1, button1)
+    })
+
+#### Create FloatingActionButton:
 
 
       val floatingButton = floatingButton {
@@ -50,40 +52,48 @@ It looks like an [Anko library](https://github.com/Kotlin/anko)
               .build())
       }
       
-**Example №2:**
+#### LinearLayout:
 
-      linearLayout {
-          padding(dp(16))
-          vertical()
+    setContentView(linearLayout { 
+      vertical()
+      padding(dp(16))
 
-          val yearTextView = text {
-          typeface(appFonts.medium())
-          colorRes(R.color.black)
-          fontSize(26f)
-          text(year)
-          layoutParams(linearLayoutParams()
-              .matchWidth()
-              .wrapHeight()
-              .marginBottom(dp(8))
-              .build())
-          }
-
-          val countTextView = text {
-          typeface(appFonts.regular())
-          fontSize(18f)
-          colorRes(R.color.black)
-          text(getString(R.string.book_count, count))
-          layoutParams(linearLayoutParams()
-              .matchWidth()
-              .wrapHeight()
-              .marginBottom(dp(16))
-              .build())
-          }
-
-          addView(yearTextView, countTextView)   
+      val edit1 = edit {
+        hint("Your name:")
+        layoutParams(linearLayoutParams().matchWidth()
+            .marginBottom(dp(8))
+            .wrapHeight().build())
       }
-  
+
+      val edit2 = edit {
+        hint("Your surname:")
+        layoutParams(linearLayoutParams().matchWidth().wrapHeight().build())
+      }
+
+      addView(edit1, edit2)
+    })
+      
+      
+#### RecyclerView:
+
+    setContentView(list {
+      adapter(mutableListOf("Twilight Sparkle", "Starlight Glimmer", "Sunset Shimmer"), object: ViewHolderWrapper<String>() {
+        override fun view(ctx: Context): View {
+            return text {
+                fontSize(18f)
+                padding(dp(8))
+                colorRes(R.color.black)
+                listenItem { _, ponyName, _ ->
+                    text(ponyName)
+                }
+            }
+        }
+      })
+    })
+
 #### More examples:
 
 [see my application code](https://github.com/KiberneticWorm/Bookstat/tree/master/app)
+
+## Download
 
