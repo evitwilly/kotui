@@ -20,10 +20,10 @@ class Toolbar(ctx: Context, appFonts: ApplicationFonts) : FrameLayout(ctx) {
     private val endButton = ToolbarIconButton(context, buttonSize, Gravity.END)
 
     private val titleView = text {
-        singleLine()
         color(black)
         typeface(appFonts.medium())
         fontSize(21f)
+        centerGravity()
         layoutParams(frameLayoutParams()
             .wrapWidth().wrapHeight()
             .gravity(Gravity.CENTER)

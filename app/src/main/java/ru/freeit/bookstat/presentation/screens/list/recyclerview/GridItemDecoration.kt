@@ -1,4 +1,4 @@
-package ru.freeit.bookstat.presentation.screens.list
+package ru.freeit.bookstat.presentation.screens.list.recyclerview
 
 import android.graphics.Rect
 import android.view.View

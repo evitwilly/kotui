@@ -1,15 +1,17 @@
 package ru.freeit.bookstat.presentation.screens.add
 
+import android.os.Bundle
 import android.view.Gravity
 import android.view.View
 import ru.freeit.bookstat.R
-import ru.freeit.bookstat.core.App
+import ru.freeit.bookstat.core.FormattedDate
 import ru.freeit.bookstat.data.model.Book
 import ru.freeit.bookstat.data.repo.BookRepository
 import ru.freeit.bookstat.presentation.screens.BaseFragment
+import ru.freeit.bookstat.presentation.screens.add.dialog.BookDateDialog
+import ru.freeit.bookstat.presentation.screens.add.dialog.BookDateFragmentResult
 import ru.freeit.bookstat.presentation.screens.add.view.colors.ColorSource
 import ru.freeit.bookstat.presentation.screens.add.view.colors.ColorsView
-import ru.freeit.bookstat.core.ApplicationFonts
 import ru.freeit.noxml.extensions.*
 
 class AddFragment : BaseFragment() {
@@ -17,9 +19,29 @@ class AddFragment : BaseFragment() {
     override val isBack = true
     override val isEndButton = true
 
-    override fun view(): View {
-        title(R.string.a_new_book)
+    private var addedDate = System.currentTimeMillis()
+
+    private fun title() {
+        val titleStr = getString(R.string.a_new_book)
+        val formattedDate = FormattedDate(addedDate)
+        title("$titleStr\n${formattedDate.string()}")
+    }
+
+    override fun view(savedInstanceState: Bundle?): View {
+
         endButtonIcon(R.drawable.ic_check)
+
+        if (savedInstanceState != null) {
+            addedDate = savedInstanceState.getLong(dateKey, 0L)
+        }
+        title()
+        titleClick { navigator.dialog(BookDateDialog(addedDate)) }
+
+        val fragmentResult = BookDateFragmentResult(parentFragmentManager)
+        fragmentResult.onResult(viewLifecycleOwner) { date ->
+            addedDate = date
+            title()
+        }
 
         val colorSource = ColorSource.Base()
         val bookRepository = BookRepository.Base(app.executor(), app.internalStorage())
@@ -66,7 +88,7 @@ class AddFragment : BaseFragment() {
                 bookNameEdit.clearError()
                 if (bookNameEdit.existsText()) {
                     progress.visible()
-                    bookRepository.save(Book(bookNameEdit.str(), colorsView.selectedColor())) {
+                    bookRepository.save(Book(bookNameEdit.str(), colorsView.selectedColor(), addedDate)) {
                         handler.post {
                             progress.gone()
                             navigator.back()
@@ -94,6 +116,15 @@ class AddFragment : BaseFragment() {
 
             addView(bookCoverFrameLayout, colorsView)
         }
+    }
+
+    override fun onSaveInstanceState(outState: Bundle) {
+        super.onSaveInstanceState(outState)
+        outState.putLong(dateKey, addedDate)
+    }
+
+    companion object {
+        const val dateKey = "add_fragment_date_key"
     }
 
 

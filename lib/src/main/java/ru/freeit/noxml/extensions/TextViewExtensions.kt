@@ -5,6 +5,7 @@ import android.app.Activity
 import android.content.Context
 import android.graphics.Typeface
 import android.util.TypedValue
+import android.view.Gravity
 import android.view.View
 import android.widget.EditText
 import android.widget.TextView
@@ -46,6 +47,18 @@ fun TextView.singleLine() {
 
 fun TextView.color(color: Int) {
     setTextColor(color)
+}
+
+fun TextView.centerGravity() {
+    gravity = Gravity.CENTER
+}
+
+fun TextView.centerHorizontalGravity() {
+    gravity = Gravity.CENTER_HORIZONTAL
+}
+
+fun TextView.centerVerticalGravity() {
+    gravity = Gravity.CENTER_VERTICAL
 }
 
 

@@ -2,6 +2,7 @@ package ru.freeit.bookstat.data.model
 
 import android.view.View
 import android.widget.TextView
+import ru.freeit.bookstat.core.FormattedDate
 import ru.freeit.noxml.extensions.bg
 import ru.freeit.noxml.extensions.roundedDrawable
 import ru.freeit.noxml.extensions.text
@@ -26,11 +27,7 @@ data class Book(
     }
 
     fun addedDate(textView: TextView, calendar: Calendar) {
-        calendar.timeInMillis = addedDate
-        val day = calendar.get(Calendar.DAY_OF_MONTH).toString().padStart(2, '0')
-        val month = calendar.get(Calendar.MONTH).toString().padStart(2, '0')
-        val year = calendar.get(Calendar.YEAR)
-        textView.text("$day.$month.$year")
+        textView.text(FormattedDate(addedDate).string())
     }
 
     fun toJson(jsonBook: JsonBook) : String {

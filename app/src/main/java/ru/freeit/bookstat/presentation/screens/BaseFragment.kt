@@ -25,10 +25,11 @@ abstract class BaseFragment : Fragment() {
     protected val navigator: Navigator by lazy { app.navigator() }
     protected val appFonts by lazy { app.appFonts() }
 
-    abstract fun view() : View
+    abstract fun view(savedInstanceState: Bundle?): View
 
     private var toolbar: Toolbar? = null
 
+    protected fun titleClick(click: () -> Unit) { toolbar?.click(click) }
     protected fun title(str: String) { toolbar?.title(str) }
     protected fun title(@StringRes resId: Int) { toolbar?.title(getString(resId)) }
     protected fun endButtonIcon(@DrawableRes drawableRes: Int) { toolbar?.endButtonImg(drawableRes) }
@@ -41,7 +42,7 @@ abstract class BaseFragment : Fragment() {
         if (isEndButton) toolbar.showEndButton() else toolbar.hideEndButton()
         toolbar.onBack(parentFragmentManager::popBackStack)
 
-        val view = view()
+        val view = view(savedInstanceState)
         view.layoutParams(linearLayoutParams()
             .matchWidth()
             .wrapHeight()

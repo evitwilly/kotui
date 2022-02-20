@@ -1,6 +1,7 @@
 package ru.freeit.bookstat.presentation.screens.list
 
 import android.content.Context
+import android.os.Bundle
 import android.view.Gravity
 import android.view.View
 import ru.freeit.bookstat.R
@@ -9,6 +10,7 @@ import ru.freeit.bookstat.data.repo.BookRepository
 import ru.freeit.bookstat.data.model.Books
 import ru.freeit.bookstat.presentation.screens.BaseFragment
 import ru.freeit.bookstat.presentation.screens.add.AddFragment
+import ru.freeit.bookstat.presentation.screens.list.recyclerview.GridItemDecoration
 import ru.freeit.bookstat.presentation.screens.stat.StatFragment
 import ru.freeit.noxml.extensions.*
 import ru.freeit.noxml.extensions.adapter.ViewHolderWrapper
@@ -18,7 +20,7 @@ class BookListFragment : BaseFragment() {
 
     override val isEndButton = true
 
-    override fun view(): View {
+    override fun view(savedInstanceState: Bundle?): View {
         title(R.string.books)
         endButtonIcon(R.drawable.ic_stat)
         endButtonClick { navigator.replace(StatFragment()) }

@@ -1,20 +1,17 @@
 package ru.freeit.bookstat.presentation.screens.stat
 
-import android.os.Handler
-import android.os.Looper
+import android.os.Bundle
 import android.view.View
 import ru.freeit.bookstat.R
-import ru.freeit.bookstat.core.App
 import ru.freeit.bookstat.data.repo.BookRepository
 import ru.freeit.bookstat.presentation.screens.BaseFragment
-import ru.freeit.bookstat.core.ApplicationFonts
 import ru.freeit.noxml.extensions.*
 
 class StatFragment : BaseFragment() {
 
     override val isBack: Boolean = true
 
-    override fun view(): View {
+    override fun view(savedInstanceState: Bundle?): View {
         title(R.string.statistics)
 
         val bookRepository = BookRepository.Base(app.executor(), app.internalStorage())
