@@ -97,3 +97,7 @@ It looks like an [Anko library](https://github.com/Kotlin/anko)
 
 ## Download
 
+Follow the video instructions:
+
+[![demo](https://img.youtube.com/vi/Un9umx9EQHk/0.jpg)](https://www.youtube.com/watch?v=Un9umx9EQHk)
+
