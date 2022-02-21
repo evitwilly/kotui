@@ -12,12 +12,12 @@ class GridItemDecoration : RecyclerView.ItemDecoration() {
         parent: RecyclerView,
         state: RecyclerView.State
     ) {
-        val currentPosition = parent.getChildLayoutPosition(view)
-
         val eightDp = 8.dp(parent.context)
-        if (currentPosition % 2 == 0) {
-            outRect.right = eightDp
-        }
+        val fourDp = eightDp / 2
+
+        outRect.left = fourDp
+        outRect.right = fourDp
         outRect.bottom = eightDp
+
     }
 }

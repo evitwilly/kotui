@@ -10,8 +10,8 @@ import ru.freeit.bookstat.data.storage.InternalStorage
 import java.util.concurrent.ExecutorService
 
 interface BookRepository {
-    fun remove(book: Book)
-    fun save(book: Book, listener: BookSavingListener)
+    fun remove(book: Book, listener: BookSavingListener = BookSavingListener {})
+    fun save(book: Book, listener: BookSavingListener = BookSavingListener {})
     fun read(callback: BookResultListener)
 
     class Base(
@@ -23,12 +23,13 @@ interface BookRepository {
 
         private var bookResultListener: BookResultListener = BookResultListener {}
 
-        override fun remove(book: Book) {
+        override fun remove(book: Book, listener: BookSavingListener) {
             service.execute {
                 val books = Books.fromJson(internalStorage.read(filename), jsonBooks)
                 val newBooks = books.withoutBook(book)
                 internalStorage.save(filename, newBooks.toJson(jsonBooks, jsonBook))
-                bookResultListener.onResult(books)
+                bookResultListener.onResult(newBooks)
+                listener.onSaved()
             }
         }
 
