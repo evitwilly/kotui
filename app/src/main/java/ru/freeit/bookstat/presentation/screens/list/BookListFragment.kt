@@ -1,19 +1,17 @@
 package ru.freeit.bookstat.presentation.screens.list
 
-import android.content.Context
 import android.os.Bundle
 import android.view.Gravity
 import android.view.View
+import androidx.recyclerview.widget.DiffUtil
 import ru.freeit.bookstat.R
 import ru.freeit.bookstat.data.model.Book
 import ru.freeit.bookstat.data.repo.BookRepository
-import ru.freeit.bookstat.data.model.Books
 import ru.freeit.bookstat.presentation.screens.BaseFragment
 import ru.freeit.bookstat.presentation.screens.add.AddFragment
 import ru.freeit.bookstat.presentation.screens.list.recyclerview.GridItemDecoration
 import ru.freeit.bookstat.presentation.screens.stat.StatFragment
 import ru.freeit.noxml.extensions.*
-import ru.freeit.noxml.extensions.adapter.ViewHolderWrapper
 import java.util.*
 
 class BookListFragment : BaseFragment() {
@@ -37,69 +35,12 @@ class BookListFragment : BaseFragment() {
                 itemDecoration(GridItemDecoration())
             }
 
-            bookRepository.read { books ->
-                val calendar = Calendar.getInstance()
-                val items = books.items().toMutableList()
-                list.adapter(items, object: ViewHolderWrapper<Book>() {
-                    override fun view(ctx: Context): View {
-                        val bookNameText = text {
-                            colorRes(R.color.white)
-                            fontSize(19f)
-                            textCenter()
-                            typeface(appFonts.medium())
-                            layoutParams(frameLayoutParams()
-                                .wrapWidth().wrapHeight()
-                                .marginTop(dp(32))
-                                .gravity(Gravity.TOP or Gravity.CENTER_HORIZONTAL)
-                                .build())
-                        }
-                        val dateText = text {
-                            colorRes(R.color.white)
-                            fontSize(14f)
-                            typeface(appFonts.medium())
-                            layoutParams(frameLayoutParams()
-                                .wrapWidth().wrapHeight()
-                                .gravity(Gravity.BOTTOM or Gravity.END)
-                                .build())
-                        }
+            val adapter = list.adapter(object: DiffUtil.ItemCallback<Book>() {
+                override fun areItemsTheSame(oldItem: Book, newItem: Book) = oldItem.isItemTheSame(newItem)
+                override fun areContentsTheSame(oldItem: Book, newItem: Book) = oldItem.isContentTheSame(newItem)
+            }, BookViewHolderContainer(appFonts) { book -> bookRepository.remove(book) })
 
-                        val deleteButton = imageView {
-                            img(R.drawable.ic_delete)
-                            clickable()
-                            ripple(R.color.purple_200, dp(16))
-                            layoutParams(frameLayoutParams()
-                                .width(dp(24)).height(dp(24))
-                                .gravity(Gravity.START or Gravity.TOP)
-                                .build())
-                        }
-
-                        val frameLayout = frameLayout {
-                            padding(dp(8))
-                            layoutParams(recyclerLayoutParams()
-                                .matchWidth().height(dp(250))
-                                .build())
-
-                            addView(bookNameText, dateText, deleteButton)
-                        }
-
-                        listenItem { index, item, listeners  ->
-                            item.roundedDrawableWithSelectedColor(frameLayout, dp(20f))
-                            item.bookName(bookNameText)
-                            item.addedDate(dateText, calendar)
-
-                            deleteButton.click {
-                                bookRepository.save(Books(items - item)) {
-                                    mainHandler.post {
-                                        listeners.itemRemoved(index)
-                                    }
-                                }
-                            }
-                        }
-
-                        return frameLayout
-                    }
-                })
-            }
+            bookRepository.read { books -> adapter.submitList(books.items()) }
 
     val floatingButton = floatingButton {
         img(R.drawable.ic_add)

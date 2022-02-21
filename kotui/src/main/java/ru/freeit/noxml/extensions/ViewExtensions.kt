@@ -26,10 +26,12 @@ import androidx.fragment.app.Fragment
 import com.google.android.material.snackbar.Snackbar
 import kotlin.math.roundToInt
 
+fun Context.dp(dimen: Int) = (resources.displayMetrics.density * dimen).roundToInt()
 fun View.dp(dimen: Int) = (resources.displayMetrics.density * dimen).roundToInt()
 fun Activity.dp(dimen: Int) = (resources.displayMetrics.density * dimen).roundToInt()
 fun Fragment.dp(dimen: Int) = (resources.displayMetrics.density * dimen).roundToInt()
 
+fun Context.dp(dimen: Float) = (resources.displayMetrics.density * dimen)
 fun View.dp(dimen: Float) = (resources.displayMetrics.density * dimen)
 fun Activity.dp(dimen: Float) = (resources.displayMetrics.density * dimen)
 fun Fragment.dp(dimen: Float) = (resources.displayMetrics.density * dimen)
@@ -52,8 +54,6 @@ fun View.id() : Int {
     id = newId
     return newId
 }
-
-
 
 fun View.ripple(@ColorRes colorRes: Int, rippleRadius: Int = 0) {
     val rippleColor = colorBy(colorRes)

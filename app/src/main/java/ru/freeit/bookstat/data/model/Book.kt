@@ -26,7 +26,7 @@ data class Book(
         return calendar.get(Calendar.YEAR)
     }
 
-    fun addedDate(textView: TextView, calendar: Calendar) {
+    fun addedDate(textView: TextView) {
         textView.text(FormattedDate(addedDate).string())
     }
 
@@ -35,6 +35,14 @@ data class Book(
         jsonBook.put(selectedColorKey, selectedColor)
         jsonBook.put(addedDateKey, addedDate)
         return jsonBook.apply()
+    }
+
+    fun isItemTheSame(other: Book): Boolean {
+        return addedDate == other.addedDate
+    }
+
+    fun isContentTheSame(other: Book) : Boolean {
+        return this == other
     }
 
     companion object {

@@ -4,19 +4,19 @@ import android.content.Context
 import android.view.View
 import android.view.ViewGroup
 
-abstract class ViewHolderWrapper<T> {
+abstract class ViewHolderContainer<T> {
 
     abstract fun view(ctx: Context) : View
 
-    private var listener: ItemBindListener<T>? = null
+    private var listener: BindListener<T>? = null
 
-    fun listenItem(listener: ItemBindListener<T>) {
+    fun listenItem(listener: BindListener<T>) {
         this.listener = listener
     }
 
     fun holder(parent: ViewGroup) : CoreViewHolder<T> {
         val view = view(parent.context)
-        return CoreViewHolder(view, listener ?: ItemBindListener { _, _, _ -> })
+        return CoreViewHolder(view, listener ?: BindListener { _, _ -> })
     }
 
 

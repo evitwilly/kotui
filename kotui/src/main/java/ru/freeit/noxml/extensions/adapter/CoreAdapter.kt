@@ -4,28 +4,10 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 
 class CoreAdapter<T>(
-    private val items: MutableList<T>,
-    private val viewHolderWrapper: ViewHolderWrapper<T>
+    private val items: List<T>,
+    private val viewHolderContainer: ViewHolderContainer<T>
 ) : RecyclerView.Adapter<CoreViewHolder<T>>() {
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int) = viewHolderWrapper.holder(parent)
-    override fun onBindViewHolder(holder: CoreViewHolder<T>, position: Int) = holder.bind(position, items[position], object:
-        CoreAdapterListeners {
-        override fun itemInserted(index: Int) {
-            notifyItemInserted(index)
-        }
-
-        override fun itemRemoved(index: Int) {
-            if (index >= 0 && index < items.size) {
-                items.removeAt(index)
-                notifyItemRemoved(index)
-                notifyItemRangeChanged(index, items.size)
-            }
-        }
-
-        override fun itemChanged(index: Int) {
-            notifyItemChanged(index)
-        }
-
-    })
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int) = viewHolderContainer.holder(parent)
+    override fun onBindViewHolder(holder: CoreViewHolder<T>, position: Int) = holder.bind(position, items[position])
     override fun getItemCount() = items.size
 }
