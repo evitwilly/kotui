@@ -10,7 +10,7 @@ abstract class ViewHolderContainer<T> {
 
     private var listener: BindListener<T>? = null
 
-    fun listenItem(listener: BindListener<T>) {
+    fun onBind(listener: BindListener<T>) {
         this.listener = listener
     }
 

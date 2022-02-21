@@ -63,7 +63,7 @@ class BookViewHolderContainer(
             addView(bookNameText, dateText, deleteButton)
         }
 
-        listenItem { _, item  ->
+        onBind { _, item  ->
             item.roundedDrawableWithSelectedColor(frameLayout, ctx.dp(20f))
             item.bookName(bookNameText)
             item.addedDate(dateText)

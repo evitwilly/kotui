@@ -96,7 +96,7 @@ fun <T> RecyclerView.adapter(items: List<T>, viewHolderContainer: ViewHolderCont
 fun <T> RecyclerView.adapter(items: List<T>, view: (listenItem: (bindListener: BindListener<T>) -> Unit) -> View) {
     this.adapter = CoreAdapter(items, object: ViewHolderContainer<T>() {
         override fun view(ctx: Context): View {
-            return view(::listenItem)
+            return view(::onBind)
         }
     })
 }
@@ -110,7 +110,7 @@ fun <T> RecyclerView.adapter(diffUtil: DiffUtil.ItemCallback<T>, viewHolderConta
 fun <T> RecyclerView.adapter(diffUtil: DiffUtil.ItemCallback<T>, view: (listenItem: (bindListener: BindListener<T>) -> Unit) -> View) : CoreAdapter2<T> {
     val adapter = CoreAdapter2(diffUtil, object: ViewHolderContainer<T>() {
         override fun view(ctx: Context): View {
-            return view(::listenItem)
+            return view(::onBind)
         }
     })
     this.adapter = adapter
