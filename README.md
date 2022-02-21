@@ -77,18 +77,63 @@ It looks like an [Anko library](https://github.com/Kotlin/anko)
 #### RecyclerView:
 
     setContentView(list {
-      adapter(mutableListOf("Twilight Sparkle", "Starlight Glimmer", "Sunset Shimmer"), object: ViewHolderWrapper<String>() {
-        override fun view(ctx: Context): View {
-            return text {
+        vertical()
+        
+        adapter(
+            listOf(
+                "Twilight Sparkle",
+                "Pinky Pie",
+                "Fluttershy",
+                "Rarity",
+                "Rainbow Dash",
+                "Apple Jack",
+                "Starlight Glimmer"
+            ),
+            object: ViewHolderContainer<String>() {
+                override fun view(ctx: Context): View {
+                    return text {
+                        fontSize(18f)
+                        colorRes(R.color.black)
+                        padding(dp(24))
+                        layoutParams(recyclerLayoutParams().matchWidth().wrapHeight().build())
+                        onBind { _, ponyName ->
+                            text(ponyName)
+                        }
+                    }
+                }
+            }
+        )
+    })
+    
+#### RecyclerView (DiffUtil.ItemCallback):
+
+    setContentView(list {
+        vertical()
+
+        val adapter = adapter(object: DiffUtil.ItemCallback<String>() {
+            override fun areItemsTheSame(oldItem: String, newItem: String) = oldItem == newItem
+            override fun areContentsTheSame(oldItem: String, newItem: String) = oldItem == newItem
+        }) { onBind ->
+            text {
                 fontSize(18f)
-                padding(dp(8))
                 colorRes(R.color.black)
-                listenItem { _, ponyName, _ ->
+                padding(dp(24))
+                layoutParams(recyclerLayoutParams().matchWidth().wrapHeight().build())
+                onBind { _, ponyName ->
                     text(ponyName)
                 }
             }
         }
-      })
+
+        adapter.submitList(listOf(
+            "Twilight Sparkle",
+            "Pinky Pie",
+            "Fluttershy",
+            "Rarity",
+            "Rainbow Dash",
+            "Apple Jack",
+            "Starlight Glimmer"
+        ))
     })
 
 #### More examples:
