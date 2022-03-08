@@ -79,9 +79,6 @@ fun FloatingActionButton.tint(@ColorRes colorRes: Int) {
     ViewCompat.setBackgroundTintList(this, ColorStateList.valueOf(colorBy(colorRes)))
 }
 
-inline fun Button.click(crossinline listener: () -> Unit) {
-    setOnClickListener { listener() }
-}
 
 
 fun Button.tint(@ColorRes colorRes: Int) {

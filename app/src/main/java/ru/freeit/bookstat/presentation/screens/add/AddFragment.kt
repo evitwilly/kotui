@@ -50,12 +50,11 @@ class AddFragment : BaseFragment() {
             vertical()
 
             val colorsView = ColorsView(context, colorSource.colors())
-            colorsView.layoutParams(linearLayoutParams()
+            colorsView.layoutParams(linearLayoutCompatParams()
                 .matchWidth().wrapHeight()
                 .marginStart(dp(16))
                 .marginBottom(dp(8))
-                .marginEnd(dp(16))
-                .build())
+                .marginEnd(dp(16)))
 
             val bookNameEdit = edit {
                 id(R.id.book_name_edit)
@@ -69,8 +68,7 @@ class AddFragment : BaseFragment() {
                 layoutParams(frameLayoutParams()
                     .wrapWidth().wrapHeight()
                     .marginTop(dp(32))
-                    .gravity(Gravity.TOP or Gravity.CENTER_HORIZONTAL)
-                    .build())
+                    .gravity(Gravity.TOP or Gravity.CENTER_HORIZONTAL))
             }
 
             val progress = progressIndicator {
@@ -79,18 +77,17 @@ class AddFragment : BaseFragment() {
                 layoutParams(frameLayoutParams()
                     .wrapWidth().wrapHeight()
                     .marginTop(dp(48))
-                    .gravity(Gravity.TOP or Gravity.CENTER_HORIZONTAL)
-                    .build())
-                gone()
+                    .gravity(Gravity.TOP or Gravity.CENTER_HORIZONTAL))
+                visibility = View.GONE
             }
 
             endButtonClick {
-                bookNameEdit.clearError()
-                if (bookNameEdit.existsText()) {
-                    progress.visible()
+                bookNameEdit.error = null
+                if (!bookNameEdit.text.isNullOrBlank()) {
+                    progress.visibility = View.VISIBLE
                     bookRepository.save(Book(bookNameEdit.str(), colorsView.selectedColor(), addedDate)) {
                         handler.post {
-                            progress.gone()
+                            progress.visibility = View.GONE
                             navigator.back()
                         }
                     }
@@ -103,9 +100,8 @@ class AddFragment : BaseFragment() {
             val bookCoverFrameLayout = frameLayout {
                 bg(roundedDrawable(colorsView.selectedColor(), bookCoverRadius))
                 padding(dp(8))
-                layoutParams(linearLayoutParams().matchWidth()
-                    .margins(dp(16))
-                    .wrapHeight().weight(1f).build())
+                layoutParams(linearLayoutCompatParams().matchWidth()
+                    .margins(dp(16)).wrapHeight().weight(1f))
 
                 addView(bookNameEdit, progress)
             }

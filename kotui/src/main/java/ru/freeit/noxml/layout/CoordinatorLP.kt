@@ -2,24 +2,15 @@ package ru.freeit.noxml.layout
 
 import androidx.coordinatorlayout.widget.CoordinatorLayout
 
-class CoordinatorLP(private var params: CoordinatorLayout.LayoutParams = CoordinatorLayout.LayoutParams(
-    CoordinatorLayout.LayoutParams.WRAP_CONTENT,
-    CoordinatorLayout.LayoutParams.WRAP_CONTENT
-)
-) {
+private const val match = CoordinatorLayout.LayoutParams.MATCH_PARENT
+private const val wrap = CoordinatorLayout.LayoutParams.WRAP_CONTENT
 
-    fun matchWidth() = CoordinatorLP(params.apply {
-        width = CoordinatorLayout.LayoutParams.MATCH_PARENT
-    })
+class CoordinatorLP(private var params: CoordinatorLayout.LayoutParams = CoordinatorLayout.LayoutParams(wrap, wrap))
+    : AbstractMarginLP<CoordinatorLayout.LayoutParams,CoordinatorLP>(params, match, wrap), LP<CoordinatorLayout.LayoutParams> {
 
-    fun wrapHeight() = CoordinatorLP(params.apply {
-        height = CoordinatorLayout.LayoutParams.WRAP_CONTENT
-    })
+    fun gravity(grav: Int) = CoordinatorLP(params.apply { gravity = grav })
 
-    fun gravity(grav: Int) = CoordinatorLP(params.apply {
-        gravity = grav
-    })
-
-    fun build() = params
+    override fun build() = params
+    override fun with(params: CoordinatorLayout.LayoutParams) = CoordinatorLP(params)
 
 }

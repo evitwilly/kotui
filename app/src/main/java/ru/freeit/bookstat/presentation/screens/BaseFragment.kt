@@ -29,7 +29,7 @@ abstract class BaseFragment : Fragment() {
 
     private var toolbar: Toolbar? = null
 
-    protected fun titleClick(click: () -> Unit) { toolbar?.click(click) }
+    protected fun titleClick(click: () -> Unit) { toolbar?.onClick = { click.invoke() } }
     protected fun title(str: String) { toolbar?.title(str) }
     protected fun title(@StringRes resId: Int) { toolbar?.title(getString(resId)) }
     protected fun endButtonIcon(@DrawableRes drawableRes: Int) { toolbar?.endButtonImg(drawableRes) }
@@ -43,11 +43,10 @@ abstract class BaseFragment : Fragment() {
         toolbar.onBack(parentFragmentManager::popBackStack)
 
         val view = view(savedInstanceState)
-        view.layoutParams(linearLayoutParams()
+        view.layoutParams(linearLayoutCompatParams()
             .matchWidth()
             .wrapHeight()
-            .weight(1f)
-            .build())
+            .weight(1f))
 
         return linearLayout {
             bg(R.color.white)

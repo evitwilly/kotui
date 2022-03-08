@@ -17,7 +17,7 @@ class ColorsView(ctx: Context, private val colors: List<Int>) : LinearLayoutComp
             bgColor(color)
             padding(dp(16))
             imgColor(colorBy(R.color.white))
-            clickable()
+            isClickable = true
         }
     }
 
@@ -38,12 +38,12 @@ class ColorsView(ctx: Context, private val colors: List<Int>) : LinearLayoutComp
             val size = width / colors.size
             colorViews.forEachIndexed { index, view ->
                 changeImgWithSelectedIndex()
-                view.click {
+                view.onClick = {
                     selected = index
                     listener.onSelect(colors[index])
                     changeImgWithSelectedIndex()
                 }
-                view.layoutParams(linearLayoutParams().width(size).height(size).build())
+                view.layoutParams(linearLayoutCompatParams().width(size).height(size))
                 addView(view)
             }
         }

@@ -1,7 +1,5 @@
 package ru.freeit.noxml.extensions
 
-
-
 import android.app.Activity
 import android.content.Context
 import android.view.View
@@ -11,11 +9,6 @@ import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import ru.freeit.noxml.extensions.adapter.BindListener
-import ru.freeit.noxml.extensions.adapter.CoreAdapter
-import ru.freeit.noxml.extensions.adapter.CoreAdapter2
-import ru.freeit.noxml.extensions.adapter.ViewHolderContainer
-
 
 fun RecyclerView.itemDecoration(decoration: RecyclerView.ItemDecoration) {
     addItemDecoration(decoration)
@@ -87,34 +80,6 @@ fun RecyclerView.adapter(adapter: RecyclerView.Adapter<*>) {
 
 fun RecyclerView.singleClickable() {
     isMotionEventSplittingEnabled = false
-}
-
-fun <T> RecyclerView.adapter(items: List<T>, viewHolderContainer: ViewHolderContainer<T>) {
-    this.adapter = CoreAdapter(items, viewHolderContainer)
-}
-
-fun <T> RecyclerView.adapter(items: List<T>, view: (listenItem: (bindListener: BindListener<T>) -> Unit) -> View) {
-    this.adapter = CoreAdapter(items, object: ViewHolderContainer<T>() {
-        override fun view(ctx: Context): View {
-            return view(::onBind)
-        }
-    })
-}
-
-fun <T> RecyclerView.adapter(diffUtil: DiffUtil.ItemCallback<T>, viewHolderContainer: ViewHolderContainer<T>) : CoreAdapter2<T> {
-    val adapter = CoreAdapter2(diffUtil, viewHolderContainer)
-    this.adapter = adapter
-    return adapter
-}
-
-fun <T> RecyclerView.adapter(diffUtil: DiffUtil.ItemCallback<T>, view: (listenItem: (bindListener: BindListener<T>) -> Unit) -> View) : CoreAdapter2<T> {
-    val adapter = CoreAdapter2(diffUtil, object: ViewHolderContainer<T>() {
-        override fun view(ctx: Context): View {
-            return view(::onBind)
-        }
-    })
-    this.adapter = adapter
-    return adapter
 }
 
 

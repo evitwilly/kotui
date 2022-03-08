@@ -28,15 +28,14 @@ class ToolbarIconButton(ctx: Context, buttonSize: Int, gravity: Int, @DrawableRe
             layoutParams.marginEnd(dp(16))
         }
 
-        layoutParams(layoutParams.build())
+        layoutParams(layoutParams)
     }
 
     init {
-        clickable()
+        isClickable = true
         layoutParams(frameLayoutParams().width(buttonSize)
             .height(buttonSize)
-            .gravity(gravity)
-            .build())
+            .gravity(gravity))
         addView(imageView)
     }
 }

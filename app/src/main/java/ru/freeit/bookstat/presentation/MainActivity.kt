@@ -15,7 +15,7 @@ class MainActivity : AppCompatActivity() {
 
         setContentView(frameLayout {
             id(R.id.fragment_container)
-            layoutParams(viewGroupLayoutParams().match().build())
+            layoutParams(viewGroupLayoutParams().match())
         })
 
         val navigator = Navigator.Base(supportFragmentManager, R.id.fragment_container)

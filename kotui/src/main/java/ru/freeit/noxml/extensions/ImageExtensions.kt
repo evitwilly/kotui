@@ -30,7 +30,6 @@ fun View.imageView(init: AppCompatImageView.() -> Unit = {}) : AppCompatImageVie
     return img
 }
 
-
 fun Fragment.imageView(init: AppCompatImageView.() -> Unit = {}) : AppCompatImageView {
     val img = AppCompatImageView(requireContext())
     img.init()

@@ -24,6 +24,7 @@ import androidx.core.content.ContextCompat
 import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
 import com.google.android.material.snackbar.Snackbar
+import ru.freeit.noxml.layout.LP
 import kotlin.math.roundToInt
 
 fun Context.dp(dimen: Int) = (resources.displayMetrics.density * dimen).roundToInt()
@@ -55,6 +56,22 @@ fun View.id() : Int {
     return newId
 }
 
+
+var <T : View> T.onClick: T.() -> Unit
+    @Deprecated("There is no getter for onClick")
+    get() = throw Exception()
+    set(action) = setOnClickListener { view ->
+        action.invoke(view as T)
+    }
+
+var <T : View> T.onLongClick: T.() -> Unit
+    @Deprecated("There is no getter for onClick")
+    get() = throw Exception()
+    set(action) = setOnLongClickListener { view ->
+        action.invoke(view as T)
+        true
+    }
+
 fun View.ripple(@ColorRes colorRes: Int, rippleRadius: Int = 0) {
     val rippleColor = colorBy(colorRes)
     val drawableBackground = background
@@ -73,38 +90,6 @@ fun View.ripple(@ColorRes colorRes: Int, rippleRadius: Int = 0) {
             radius = rippleRadius
         }
     }
-}
-
-fun View.invisible() {
-    visibility = View.INVISIBLE
-}
-
-fun View.visible() {
-    isVisible = true
-}
-
-fun View.visible(isSo: Boolean) {
-    isVisible = isSo
-}
-
-fun View.gone() {
-    isVisible = false
-}
-
-fun View.clickable() {
-    isClickable = true
-}
-
-fun View.focusable() {
-    isFocusable = true
-}
-
-inline fun View.longClick(crossinline listener: () -> Unit) {
-    setOnLongClickListener { listener(); true }
-}
-
-inline fun View.click(crossinline listener: () -> Unit) {
-    setOnClickListener { listener() }
 }
 
 fun View.marginStart(dp: Int) = (layoutParams as? ViewGroup.MarginLayoutParams)?.run {
@@ -144,7 +129,6 @@ fun View.afterMeasure(func: () -> Unit) {
     })
 }
 
-
 fun Fragment.emptyView(init: View.() -> Unit) : View {
     val view = View(requireContext())
     view.init()
@@ -169,8 +153,8 @@ fun emptyView(ctx: Context, init: View.() -> Unit) : View {
     return view
 }
 
-fun View.layoutParams(params: ViewGroup.LayoutParams) {
-    layoutParams = params
+fun View.layoutParams(params: LP<*>) {
+    layoutParams = params.build()
 }
 
 fun View.bgColor(color: Int) {

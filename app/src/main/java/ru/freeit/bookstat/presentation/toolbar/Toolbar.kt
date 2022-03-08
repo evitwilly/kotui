@@ -4,6 +4,7 @@ import android.content.Context
 import android.view.Gravity
 import android.widget.FrameLayout
 import androidx.annotation.DrawableRes
+import androidx.core.view.isVisible
 import ru.freeit.bookstat.R
 import ru.freeit.bookstat.core.ApplicationFonts
 import ru.freeit.noxml.extensions.*
@@ -28,35 +29,34 @@ class Toolbar(ctx: Context, appFonts: ApplicationFonts) : FrameLayout(ctx) {
             .wrapWidth().wrapHeight()
             .gravity(Gravity.CENTER)
             .marginStart(initialTitleMargin)
-            .marginEnd(initialTitleMargin)
-            .build())
+            .marginEnd(initialTitleMargin))
     }
 
     fun title(str: String) { titleView.text(str) }
-    fun onBack(listener: () -> Unit) { backButton.click(listener) }
-    fun endButtonClick(listener: () -> Unit) { endButton.click(listener) }
+    fun onBack(listener: () -> Unit) { backButton.onClick = { listener.invoke() } }
+    fun endButtonClick(listener: () -> Unit) { endButton.onClick = { listener.invoke() } }
 
     fun endButtonImg(@DrawableRes drawableRes: Int) {
         endButton.img(drawableRes)
     }
 
     fun showEndButton() {
-        endButton.visible()
+        endButton.isVisible = true
         titleMargin(buttonSize + gapBetweenBackButtonAndTitleView)
     }
 
     fun hideEndButton() {
-        endButton.gone()
+        endButton.isVisible = false
         titleMargin(initialTitleMargin)
     }
 
     fun showBackButton() {
-        backButton.visible()
+        backButton.isVisible = true
         titleMargin(buttonSize + gapBetweenBackButtonAndTitleView)
     }
 
     fun hideBackButton() {
-        backButton.gone()
+        backButton.isVisible = false
         titleMargin(initialTitleMargin)
     }
 
@@ -67,14 +67,13 @@ class Toolbar(ctx: Context, appFonts: ApplicationFonts) : FrameLayout(ctx) {
 
     init {
         backButton.iconRipple(R.color.purple_200, dp(48))
-        backButton.gone()
+        backButton.isVisible = false
         endButton.iconRipple(R.color.purple_200, dp(buttonSize / 2))
-        endButton.gone()
+        endButton.isVisible = false
 
         layoutParams(viewGroupLayoutParams()
             .matchWidth()
-            .height(dp(64))
-            .build())
+            .height(dp(64)))
 
         addView(backButton, titleView, endButton)
     }

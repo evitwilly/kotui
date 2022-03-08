@@ -47,14 +47,6 @@ fun AppCompatEditText.error(@StringRes res: Int) {
     error = context.resources.getString(res)
 }
 
-fun AppCompatEditText.existsText() : Boolean {
-    return !text.isNullOrBlank()
-}
-
-fun AppCompatEditText.clearError() {
-    error = null
-}
-
 fun AppCompatEditText.multiline(lines: Int, grav: Int = Gravity.TOP) {
     maxLines = lines
     setLines(lines)

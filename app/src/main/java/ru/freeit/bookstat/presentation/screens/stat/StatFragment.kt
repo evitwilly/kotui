@@ -28,29 +28,25 @@ class StatFragment : BaseFragment() {
                                 colorRes(R.color.black)
                                 fontSize(26f)
                                 text(year)
-                                layoutParams(linearLayoutParams()
-                                    .matchWidth()
-                                    .wrapHeight()
-                                    .marginBottom(dp(8))
-                                    .build())
+                                layoutParams(linearLayoutCompatParams()
+                                    .matchWidth().wrapHeight()
+                                    .marginBottom(dp(8)))
                             }
                             val countTextView = text {
                                 typeface(appFonts.regular())
                                 fontSize(18f)
                                 colorRes(R.color.black)
                                 text(getString(R.string.book_count, count))
-                                layoutParams(linearLayoutParams()
-                                    .matchWidth()
-                                    .wrapHeight()
-                                    .marginBottom(dp(16))
-                                    .build())
+                                layoutParams(linearLayoutCompatParams()
+                                    .matchWidth().wrapHeight()
+                                    .marginBottom(dp(16)))
                             }
                             addView(yearTextView, countTextView)
                         }
                     }
                 }
             })
-            layoutParams(viewGroupLayoutParams().match().build())
+            layoutParams(viewGroupLayoutParams().match())
         }
     }
 }
