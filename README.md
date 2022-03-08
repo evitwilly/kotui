@@ -73,69 +73,6 @@ It looks like an [Anko library](https://github.com/Kotlin/anko)
       addView(edit1, edit2)
     })
       
-      
-#### RecyclerView:
-
-    setContentView(list {
-        vertical()
-        
-        adapter(
-            listOf(
-                "Twilight Sparkle",
-                "Pinky Pie",
-                "Fluttershy",
-                "Rarity",
-                "Rainbow Dash",
-                "Apple Jack",
-                "Starlight Glimmer"
-            ),
-            object: ViewHolderContainer<String>() {
-                override fun view(ctx: Context): View {
-                    return text {
-                        fontSize(18f)
-                        colorRes(R.color.black)
-                        padding(dp(24))
-                        layoutParams(recyclerLayoutParams().matchWidth().wrapHeight().build())
-                        onBind { _, ponyName ->
-                            text(ponyName)
-                        }
-                    }
-                }
-            }
-        )
-    })
-    
-#### RecyclerView (DiffUtil.ItemCallback):
-
-    setContentView(list {
-        vertical()
-
-        val adapter = adapter(object: DiffUtil.ItemCallback<String>() {
-            override fun areItemsTheSame(oldItem: String, newItem: String) = oldItem == newItem
-            override fun areContentsTheSame(oldItem: String, newItem: String) = oldItem == newItem
-        }) { onBind ->
-            text {
-                fontSize(18f)
-                colorRes(R.color.black)
-                padding(dp(24))
-                layoutParams(recyclerLayoutParams().matchWidth().wrapHeight().build())
-                onBind { _, ponyName ->
-                    text(ponyName)
-                }
-            }
-        }
-
-        adapter.submitList(listOf(
-            "Twilight Sparkle",
-            "Pinky Pie",
-            "Fluttershy",
-            "Rarity",
-            "Rainbow Dash",
-            "Apple Jack",
-            "Starlight Glimmer"
-        ))
-    })
-
 #### More examples:
 
 [see my application code](https://github.com/KiberneticWorm/Bookstat/tree/master/app)
